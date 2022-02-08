@@ -1,27 +1,24 @@
 {
   "name": "icono",
   "version": "1.0.0",
-  "description": "",
-  "main": "serve.js",
+  "description": "Icono App",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon serve.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Gui-Fernandes21/icono.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Gui Fernandes",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Gui-Fernandes21/icono/issues"
   },
   "homepage": "https://github.com/Gui-Fernandes21/icono#readme",
   "dependencies": {
-    "graphql-tools": "^8.2.0",
-    "graphql-yoga": "^1.18.3",
+    "apollo-server": "^3.6.2",
+    "graphql": "^16.3.0",
     "prisma": "^3.9.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
   }
 }

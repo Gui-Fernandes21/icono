@@ -1,7 +1,14 @@
+const { gql } = require('apollo-server')
 
-const typeDefs = `
+
+const typeDefs = gql`
   type Query {
-    getAcademy: String!
+    books: [Book]
+  }
+  type Book {
+    name: String
+    author: String
   }
 `; 
+
 module.exports = typeDefs
