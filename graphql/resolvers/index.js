@@ -21,13 +21,13 @@ const resolvers = {
         return createdUser;
       },
     },
-  },
-  createAcademy: {
-    async resolve(parent, { data }) {
-      const createdAcademy = await prisma.academy.create({
-        data: { name: data.name },
-      });
-      return createdAcademy;
+    createAcademy: {
+      async resolve(parent, { data }) {
+        const createdAcademy = await prisma.academy.create({
+          data: { name: data.name },
+        });
+        return createdAcademy;
+      },
     },
   },
 };

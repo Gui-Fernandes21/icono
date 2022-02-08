@@ -10,8 +10,8 @@ type Query {
 }
 
 type Mutation {
-  ${academyMutations} 
   ${userMutations}
+  ${academyMutations}
 }
 
 type User {
