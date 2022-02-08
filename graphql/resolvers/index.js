@@ -15,6 +15,7 @@ const resolvers = {
             email: data.email,
             name: data.name,
             secret: data.secret,
+            gym_id: 1
           },
         });
 
