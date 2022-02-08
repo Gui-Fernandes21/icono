@@ -2,9 +2,9 @@
   "name": "icono",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "serve.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon serve.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +17,11 @@
   },
   "homepage": "https://github.com/Gui-Fernandes21/icono#readme",
   "dependencies": {
-    "express": "^4.17.2",
-    "express-graphql": "^0.12.0",
-    "graphql": "^15.8.0",
+    "graphql-tools": "^8.2.0",
     "graphql-yoga": "^1.18.3",
     "prisma": "^3.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
