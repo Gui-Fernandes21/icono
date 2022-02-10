@@ -15,19 +15,36 @@ const resolvers = {
             email: data.email,
             name: data.name,
             secret: data.secret,
-            gym_id: 1
           },
         });
 
         return createdUser;
       },
     },
+    changeUserStatus: {
+      async resolve(parent, {data}) {
+        
+      }
+    },
     createAcademy: {
       async resolve(parent, { data }) {
-        const createdAcademy = await prisma.academy.create({
-          data: { name: data.name },
+        const activeUser = await prisma.user.findUnique({
+          where: {
+            id: +data.userId,
+          },
+          select: {
+            staff
+          }
         });
-        return createdAcademy;
+
+        if (activeUser) {
+          const createdAcademy = await prisma.academy.create({
+            data: { name: data.name, staff: [activeUser] },
+          });
+          return createdAcademy;
+        } else {
+          throw new Error("not a valid user");
+        }
       },
     },
   },

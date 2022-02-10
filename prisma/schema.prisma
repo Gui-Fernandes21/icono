@@ -1,25 +1,67 @@
 datasource db {
   provider = "mysql"
-  url = env("DB_URL")
+  url      = env("DB_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  OWNER
+  PROFESSOR
+}
+
 model User {
-  id Int @id @default(autoincrement())
-  email String
-  name String
+  id     Int    @id @default(autoincrement())
+  email  String @unique
+  name   String
   secret String
 
-  gym Academy @relation(fields: [gym_id],references: [id])
-  gym_id Int
+  student Student?
+  staff   Staff?
+  master  Master?
+}
+
+model Student {
+  id Int @id @default(autoincrement())
+
+  user       User        @relation(fields: [userId], references: [id])
+  userId     Int         @unique
+  gym        Academy     @relation(fields: [gym_id], references: [id])
+  gym_id     Int         @unique
+  classrooms Classroom[]
+}
+
+model Staff {
+  id   Int  @id @default(autoincrement())
+  role Role @default(PROFESSOR)
+
+  user       User        @relation(fields: [userId], references: [id])
+  userId     Int         @unique
+  gym        Academy     @relation(fields: [gym_id], references: [id])
+  gym_id     Int         @unique
+  classrooms Classroom[]
+}
+
+model Master {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
 }
 
 model Academy {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
 
-  students User[]
+  students Student[]
+  staff    Staff[]
+}
+
+model Classroom {
+  id Int @id @default(autoincrement())
+
+  staff    Staff[]
+  students Student[]
 }

@@ -1,8 +1,7 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
-const userMutations = require('./mutations/user.js');
-const academyMutations = require('./mutations/academy.js')
-
+const userMutations = require("./mutations/user.js");
+const academyMutations = require("./mutations/academy.js");
 
 const typeDefs = gql`
 type Query {
@@ -15,15 +14,39 @@ type Mutation {
 }
 
 type User {
-  name: String
-  email: String
+  id: ID
+  name: String!
+  email: String!
+}
+
+type Student {
+  id: ID
+  
+  user: User!
+  gym: Academy!
+}
+
+type Staff {
+  id: ID
+  role: Role!
+  
+  user: User!
+  gym: Academy!
 }
 
 type Academy {
-  id: ID!
+  id: ID
   name: String!
 
-  students: [User]
+  students: [Student]
+  staff: [Staff]
+}
+
+type Classroom {
+  id: ID
+
+  staff: [Staff!]
+  students: [Student]
 }
 
 input UserCreationInput {
@@ -33,8 +56,18 @@ input UserCreationInput {
 }
 
 input AcademyCreationInput {
-  name: String
+  userId: ID!
+  name: String!
 }
-`; 
 
-module.exports = typeDefs
+input ChangeUserStatusInput {
+  
+}
+
+enum Role {
+  PROFESSOR
+  OWNER
+}
+`;
+
+module.exports = typeDefs;

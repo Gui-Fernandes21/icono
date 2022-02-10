@@ -4,7 +4,10 @@
   "description": "Icono App",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "studio": "npx prisma studio",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate dev --name init"
   },
   "repository": {
     "type": "git",
