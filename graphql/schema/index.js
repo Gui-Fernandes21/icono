@@ -17,13 +17,17 @@ type User {
   id: ID
   name: String!
   email: String!
+  clearance: Clearance
+
+  staff: Staff
+  student: Student
 }
 
 type Student {
   id: ID
   
-  user: User!
-  gym: Academy!
+  user: User
+  gym: Academy
 }
 
 type Staff {
@@ -61,12 +65,26 @@ input AcademyCreationInput {
 }
 
 input ChangeUserStatusInput {
-  
+  userId: ID!
+  clearance: Clearance!
+}
+
+input ConnectUserAcademyInput {
+  academyId: ID!
+  userId: ID!
 }
 
 enum Role {
   PROFESSOR
   OWNER
+}
+
+enum Clearance {
+  REGULAR
+  STUDENT
+  PROFESSOR
+  OWNER
+  MASTER
 }
 `;
 

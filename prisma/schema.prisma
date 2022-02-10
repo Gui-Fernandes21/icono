@@ -12,24 +12,35 @@ enum Role {
   PROFESSOR
 }
 
-model User {
-  id     Int    @id @default(autoincrement())
-  email  String @unique
-  name   String
-  secret String
+enum Clearance {
+  REGULAR
+  STUDENT
+  PROFESSOR
+  OWNER
+  MASTER
+}
 
-  student Student?
-  staff   Staff?
-  master  Master?
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String
+  secret    String
+  clearance Clearance @default(REGULAR)
+
+  student    Student? @relation(fields: [student_id], references: [id])
+  student_id Int?     @unique
+  staff      Staff?   @relation(fields: [staff_id], references: [id])
+  staff_id   Int?     @unique
+  master     Master?  @relation(fields: [master_id], references: [id])
+  master_id  Int?     @unique
 }
 
 model Student {
   id Int @id @default(autoincrement())
 
-  user       User        @relation(fields: [userId], references: [id])
-  userId     Int         @unique
+  user       User?
   gym        Academy     @relation(fields: [gym_id], references: [id])
-  gym_id     Int         @unique
+  gym_id     Int
   classrooms Classroom[]
 }
 
@@ -37,18 +48,16 @@ model Staff {
   id   Int  @id @default(autoincrement())
   role Role @default(PROFESSOR)
 
-  user       User        @relation(fields: [userId], references: [id])
-  userId     Int         @unique
-  gym        Academy     @relation(fields: [gym_id], references: [id])
-  gym_id     Int         @unique
+  user       User?
+  gym        Academy?    @relation(fields: [gym_id], references: [id])
+  gym_id     Int?        @unique
   classrooms Classroom[]
 }
 
 model Master {
   id Int @id @default(autoincrement())
 
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
+  user User?
 }
 
 model Academy {
