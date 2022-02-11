@@ -7,11 +7,16 @@ const { user, staff, student } = prisma;
 const userMutations = {
   createUser: {
     async resolve(parent, { data }) {
+      let clearance = data.clearance;
+      
+      if (!clearance) clearance = "REGULAR"
+      
       const createdUser = await user.create({
         data: {
           email: data.email,
           name: data.name,
           secret: data.secret,
+          clearance: clearance
         },
       });
 
@@ -23,12 +28,12 @@ const userMutations = {
     async resolve(parent, { data }) {
       const activeUser = await user.findUnique({ where: { id: +data.userId } });
 
-      if(activeUser.clearance === 'MASTER') {
-        throw new Error('You cannot modify the status of a master user!');
+      if (activeUser.clearance === "MASTER") {
+        throw new Error("You cannot modify the status of a master user!");
       }
 
-      if(data.clearance === 'MASTER') {
-        throw new Error('Access denied!!!');
+      if (data.clearance === "MASTER") {
+        throw new Error("Access denied!!!");
       }
 
       await searchAndDestroy(activeUser);
@@ -60,7 +65,9 @@ const userMutations = {
       }
 
       if (data.clearance === "OWNER") {
-        const createdStaff = await createAndConnect(data.clearance);
+        const gym_id = data.gymId;
+        if (!gym_id) throw new Error("Must specify the id of the owned gym");
+        const createdStaff = await createAndConnect(data.clearance, gym_id);
         const updatedUser = await user.update({
           where: { id: +data.userId },
           data: {
@@ -81,18 +88,18 @@ const userMutations = {
           gym_id: +data.academyId,
         },
         select: {
-          id: true
-        }
-      })
+          id: true,
+        },
+      });
 
       await user.update({
-        where: { id: +data.userId},
-        data: { student_id: createdStudentId }
-      })
+        where: { id: +data.userId },
+        data: { student_id: createdStudentId },
+      });
 
-      return 'Connected Successfully'
-    }
-  }
+      return "Connected Successfully";
+    },
+  },
 };
 
 module.exports = { userMutations };
