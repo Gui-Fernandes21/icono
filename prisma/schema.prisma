@@ -31,8 +31,6 @@ model User {
   student_id Int?     @unique
   staff      Staff?   @relation(fields: [staff_id], references: [id])
   staff_id   Int?     @unique
-  master     Master?  @relation(fields: [master_id], references: [id])
-  master_id  Int?     @unique
   owned_gym Academy?
 }
 
@@ -53,12 +51,6 @@ model Staff {
   gym        Academy?    @relation(fields: [gym_id], references: [id])
   gym_id     Int?
   classrooms Classroom[]
-}
-
-model Master {
-  id Int @id @default(autoincrement())
-
-  user User?
 }
 
 model Academy {

@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const { createAndConnect, searchAndDestroy } = require("../utils/functions");
-const { user, staff, student } = prisma;
+const { user, staff, student, master } = prisma;
 
 const userMutations = {
   createUser: {
