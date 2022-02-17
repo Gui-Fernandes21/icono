@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const { user, staff, student } = prisma;
 
 const utilFunctions = {
-  async createAndConnect(param) {
+  async createAndConnect(param, gym_id) {
     if (param === "STUDENT") {
       const createdStudent = await student.create({
         data: {
@@ -27,6 +27,7 @@ const utilFunctions = {
       const createdStaff = await staff.create({
         data: {
           role: param,
+          gym_id: +gym_id
         },
       });
       return createdStaff;

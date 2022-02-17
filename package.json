@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/Gui-Fernandes21/icono#readme",
   "dependencies": {
-    "@prisma/client": "^3.9.1",
+    "@prisma/client": "^3.9.2",
     "apollo-server": "^3.6.2",
     "graphql": "^16.3.0",
-    "prisma": "^3.9.1"
+    "prisma": "^3.9.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

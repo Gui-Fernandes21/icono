@@ -19,8 +19,8 @@ type User {
   email: String!
   clearance: Clearance
 
-  staff: Staff
-  student: Student
+  staff_id: ID
+  student_id: ID
 }
 
 type Student {
@@ -58,6 +58,8 @@ input UserCreationInput {
   name: String
   email: String
   secret: String
+
+  clearance: Clearance
 }
 
 input AcademyCreationInput {
@@ -68,6 +70,8 @@ input AcademyCreationInput {
 input ChangeUserStatusInput {
   userId: ID!
   clearance: Clearance!
+
+  gymId: ID
 }
 
 input ConnectUserAcademyInput {

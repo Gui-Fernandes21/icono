@@ -56,7 +56,7 @@ model Staff {
 model Academy {
   id   Int    @id @default(autoincrement())
   name String
-  
+
   students Student[]
   staff    Staff[]
   owner User @relation(fields: [owner_id], references: [id])
