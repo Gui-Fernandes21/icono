@@ -57,8 +57,6 @@ input UserCreationInput {
   name: String
   email: String
   secret: String
-
-  clearance: Clearance
 }
 
 input AcademyCreationInput {

@@ -7,16 +7,12 @@ const { user, staff, student, master } = prisma;
 const userMutations = {
   createUser: {
     async resolve(parent, { data }) {
-      let clearance = data.clearance;
-      
-      if (!clearance) clearance = "REGULAR"
-      
+      console.log(data)
       const createdUser = await user.create({
         data: {
           email: data.email,
           name: data.name,
           secret: data.secret,
-          clearance: clearance
         },
       });
 
