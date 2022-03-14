@@ -44,6 +44,7 @@ type Academy {
 
   students: [Student]
   staff: [Staff]
+  ownerId: ID!
 }
 
 type Classroom {

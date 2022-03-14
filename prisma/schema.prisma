@@ -49,7 +49,7 @@ model Staff {
 
   user       User?
   gym        Academy?    @relation(fields: [gym_id], references: [id])
-  gym_id     Int?
+  gym_id     Int?        @unique
   classrooms Classroom[]
 }
 
@@ -60,7 +60,7 @@ model Academy {
   students Student[]
   staff    Staff[]
   owner User @relation(fields: [owner_id], references: [id])
-  owner_id Int 
+  owner_id Int
 }
 
 model Classroom {
