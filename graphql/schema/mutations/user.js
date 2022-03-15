@@ -1,5 +1,5 @@
 const userMutations = `
-  createUser(data: UserCreationInput!): User!
+  createUser(data: UserCreationInput!): AuthPayload!
   changeUserStatus(data: ChangeUserStatusInput!): User!
   connectUserAcademy(data: ConnectUserAcademyInput!): String
 `

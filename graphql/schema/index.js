@@ -54,6 +54,11 @@ type Classroom {
   students: [Student]
 }
 
+type AuthPayload {
+  token: String!
+  userId: ID!
+}
+
 input UserCreationInput {
   name: String
   email: String
