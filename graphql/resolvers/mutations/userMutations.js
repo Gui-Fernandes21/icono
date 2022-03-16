@@ -1,45 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+
 
 const { createAndConnect, searchAndDestroy } = require("../utils/functions");
 const { user, staff, student } = prisma;
 
 const userMutations = {
-  createUser: {
-    async resolve(parent, { data }) {
-      const { email, name, secret } = data;
-
-      if (!email || !name || !secret) {
-        throw new Error(
-          "Please provide every piece of information about the new User."
-        );
-      }
-
-      const hashedPassword = await bcrypt.hash(secret, 12);
-
-      const createdUser = await user.create({
-        data: {
-          email,
-          name,
-          secret: hashedPassword,
-        },
-      });
-
-      const token = jwt.sign(
-        { data: { createdUser } },
-        "Icon Jiu Jitsu Brussels",
-        { expiresIn: "1h" }
-      );
-      console.log("running");
-
-      console.log(token);
-
-      return { token, userId: createdUser.id };
-    },
-  },
+  
 
   changeUserStatus: {
     async resolve(parent, { data }) {

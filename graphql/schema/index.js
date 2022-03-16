@@ -2,6 +2,7 @@ const { gql } = require("apollo-server");
 
 const userMutations = require("./mutations/user.js");
 const academyMutations = require("./mutations/academy.js");
+const authMutations = require('./mutations/auth.js')
 
 const typeDefs = gql`
 type Query {
@@ -11,6 +12,7 @@ type Query {
 type Mutation {
   ${userMutations}
   ${academyMutations}
+  ${authMutations}
 }
 
 type User {
@@ -59,10 +61,15 @@ type AuthPayload {
   userId: ID!
 }
 
-input UserCreationInput {
-  name: String
-  email: String
-  secret: String
+input SignupInput {
+  name: String!
+  email: String!
+  secret: String!
+}
+
+input LoginInput {
+  email: String!
+  secret: String!
 }
 
 input AcademyCreationInput {
