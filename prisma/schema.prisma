@@ -1,10 +1,13 @@
-datasource db {
-  provider = "mysql"
-  url      = env("DB_URL")
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -60,7 +63,7 @@ model Academy {
   students Student[]
   staff    Staff[]
   owner User @relation(fields: [owner_id], references: [id])
-  owner_id Int
+  owner_id Int @unique
 }
 
 model Classroom {

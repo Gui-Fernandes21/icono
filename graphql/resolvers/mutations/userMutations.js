@@ -7,8 +7,6 @@ const { createAndConnect, searchAndDestroy } = require("../utils/functions");
 const { user, staff, student } = prisma;
 
 const userMutations = {
-  
-
   changeUserStatus: {
     async resolve(parent, { data }) {
       const activeUser = await user.findUnique({ where: { id: +data.userId } });

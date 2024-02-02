@@ -7,6 +7,7 @@ const authMutations = require('./mutations/auth.js')
 const typeDefs = gql`
 type Query {
   users: [User]
+  user(id: ID!): User
 }
 
 type Mutation {

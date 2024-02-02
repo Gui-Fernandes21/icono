@@ -105,3 +105,6 @@ dist
 
 # Prisma DataBase Migrations
 prisma/migrations
+
+# Nodemon ENV 
+nodemon.json

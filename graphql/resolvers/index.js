@@ -5,16 +5,19 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const resolvers = {
-  Query: {
-    async users() {
-      return await prisma.user.findMany();
-    },
-  },
-  Mutation: {
-    ...userMutations,
-    ...academyMutations,
-    ...authMutations
-  },
+	Query: {
+		async users() {
+			return await prisma.user.findMany();
+		},
+		async user(parent, { id }) {
+			return await prisma.user.findUnique({ where: { id: +id } });
+		},
+	},
+	Mutation: {
+		...userMutations,
+		...academyMutations,
+		...authMutations,
+	},
 };
 
 module.exports = resolvers;
