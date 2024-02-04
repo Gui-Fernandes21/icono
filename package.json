@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
+    "db": "npx prisma migrate dev --name init && npx prisma generate",
     "studio": "npx prisma studio",
     "generate": "npx prisma generate",
     "migrate": "npx prisma migrate dev --name init"

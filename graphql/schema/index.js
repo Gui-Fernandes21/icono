@@ -2,12 +2,15 @@ const { gql } = require("apollo-server");
 
 const userMutations = require("./mutations/user.js");
 const academyMutations = require("./mutations/academy.js");
-const authMutations = require('./mutations/auth.js')
+const authMutations = require('./mutations/auth.js');
 
 const typeDefs = gql`
 type Query {
   users: [User]
+  profiles: [Profile]
   user(id: ID!): User
+  profile(userId: ID!): Profile
+  membership(userId: ID!): Membership
 }
 
 type Mutation {
@@ -18,12 +21,33 @@ type Mutation {
 
 type User {
   id: ID
-  name: String!
   email: String!
   clearance: Clearance
+  profile: Profile
+  membership: Membership
 
   staff_id: ID
   student_id: ID
+}
+
+type Membership {
+  id: ID
+  status: Status
+  type: TypeMembership
+  expiry_date: String
+  member_since: String
+  payment: PaymentMethod
+  userId: ID
+}
+
+type Profile {
+  id: ID
+  name: String
+  rank: Belt
+  biography: String
+  picUrl: String
+
+  userID: ID
 }
 
 type Student {
@@ -101,6 +125,32 @@ enum Clearance {
   PROFESSOR
   OWNER
   MASTER
+}
+
+enum Belt {
+  WHITE
+  BLUE
+  PURPLE
+  BROWN
+  BLACK
+}
+
+enum Status {
+  ACTIVE
+  EXPIRED
+}
+
+enum TypeMembership {
+  MONTH
+  TRIMESTER
+  SEMESTER
+  ANUAL
+}
+
+enum PaymentMethod {
+  CARD
+  CASH
+  BANK
 }
 `;
 

@@ -23,18 +23,57 @@ enum Clearance {
   MASTER
 }
 
+enum Belt {
+  WHITE
+  BLUE
+  PURPLE
+  BROWN
+  BLACK
+}
+
+enum Status {
+  ACTIVE
+  EXPIRED
+}
+
+enum TypeMembership {
+  MONTH
+  TRIMESTER
+  SEMESTER
+  ANUAL
+}
+
+enum PaymentMethod {
+  CARD
+  CASH
+  BANK
+}
+
 model User {
   id        Int       @id @default(autoincrement())
   email     String    @unique
-  name      String
   secret    String
   clearance Clearance @default(REGULAR)
+  profile Profile?
+  membership Membership?
 
   student    Student? @relation(fields: [student_id], references: [id])
   student_id Int?     @unique
   staff      Staff?   @relation(fields: [staff_id], references: [id])
   staff_id   Int?     @unique
   owned_gym Academy?
+}
+
+model Membership {
+  id Int @id @default(autoincrement())
+  status Status @default(EXPIRED)
+  type TypeMembership @default(MONTH)
+  payment PaymentMethod @default(CARD)
+
+  expiry_date DateTime @default(now())
+  member_since DateTime @default(now())
+  user User @relation(fields: [userId], references: [id])
+  userId Int @unique
 }
 
 model Student {
@@ -71,4 +110,15 @@ model Classroom {
 
   staff    Staff[]
   students Student[]
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  name String
+  rank Belt @default(WHITE)
+  biography String
+  picUrl String
+  
+  user User @relation(fields: [userID], references: [id])
+  userID Int @unique
 }
