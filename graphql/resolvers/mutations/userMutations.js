@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const { createAndConnect, searchAndDestroy } = require("../utils/functions");
-const { user, staff, student, membership } = prisma;
+const { user, staff, student, membership, profile } = prisma;
 
 const userMutations = {
 	changeUserStatus: {
@@ -62,6 +62,28 @@ const userMutations = {
 		},
 	},
 
+	updateProfile: {
+		async resolve(parent, { data }) {
+			if (!data.userId) throw new Error("Must specify the id of the user");
+
+			const updateProfile = await profile.update({
+				where: { userID: +data.userId },
+				data: {
+					firstName: data.firstName,
+					lastName: data.lastName,
+					picUrl: data.picUrl,
+					biography: data.biography,
+				},
+			});
+
+      console.log(updateProfile);
+
+			if (!updateProfile) throw new Error("Profile not found!");
+
+			return updateProfile;
+		},
+	},
+
 	connectUserAcademy: {
 		async resolve(parent, { data }) {
 			const createdStudentId = await student.create({
@@ -86,25 +108,24 @@ const userMutations = {
 		async resolve(parent, { data }) {
 			const activeUser = await user.findUnique({ where: { id: +data } });
 
-      if (!activeUser) throw new Error('Error finding the user!');
+			if (!activeUser) throw new Error("Error finding the user!");
 
-      const expDate = new Date().setMonth(new Date().getMonth()+ 1);
-      console.log(data);
+			const expDate = new Date().setMonth(new Date().getMonth() + 1);
+			console.log(data);
 
+			const newMembership = await membership.create({
+				data: {
+					status: "ACTIVE",
+					type: "MONTH",
+					payment: "CARD",
 
-      const newMembership = await membership.create({
-        data: {
-          status: "ACTIVE",
-          type: "MONTH",
-          payment: "CARD",
+					expiry_date: new Date(expDate),
+					member_since: new Date(),
+					userId: +data,
+				},
+			});
 
-          expiry_date: new Date(expDate),
-          member_since: new Date(),
-          userId: +data,
-        }
-      })
-
-      return newMembership;
+			return newMembership;
 		},
 	},
 };

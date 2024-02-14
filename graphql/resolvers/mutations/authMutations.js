@@ -9,9 +9,9 @@ const { user, staff, student, profile } = prisma;
 const authMutations = {
 	signup: {
 		async resolve(parent, { data }) {
-			const { email, name, secret } = data;
+			const { email, firstName, lastName, secret } = data;
 
-			if (!email || !name || !secret) {
+			if (!email || !firstName || !lastName || !secret) {
 				throw new Error(
 					"Please provide every piece of information about the new User."
 				);
@@ -28,7 +28,8 @@ const authMutations = {
 
 			await profile.create({
 				data: {
-					name,
+					firstName,
+          lastName,
 					biography: "",
 					picUrl: "",
 					userID: createdUser.id,

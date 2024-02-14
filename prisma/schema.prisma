@@ -114,10 +114,11 @@ model Classroom {
 
 model Profile {
   id Int @id @default(autoincrement())
-  name String
+  firstName String
+  lastName String
   rank Belt @default(WHITE)
   biography String
-  picUrl String
+  picUrl String @db.LongText
   
   user User @relation(fields: [userID], references: [id])
   userID Int @unique

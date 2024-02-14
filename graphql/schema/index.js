@@ -42,10 +42,13 @@ type Membership {
 
 type Profile {
   id: ID
-  name: String
-  rank: Belt
+  
+  firstName: String
+  lastName: String
   biography: String
   picUrl: String
+  
+  rank: Belt
 
   userID: ID
 }
@@ -95,6 +98,15 @@ input SignupInput {
 input LoginInput {
   email: String!
   secret: String!
+}
+
+input ProfileInput {
+  userId: ID!
+  
+  firstName: String
+  lastName: String
+  picUrl: String
+  biography: String
 }
 
 input AcademyCreationInput {
