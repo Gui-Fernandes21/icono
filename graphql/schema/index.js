@@ -50,7 +50,7 @@ type Profile {
   
   rank: Belt
 
-  userID: ID
+  userId: ID
 }
 
 type Student {
@@ -90,7 +90,8 @@ type AuthPayload {
 }
 
 input SignupInput {
-  name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   secret: String!
 }
@@ -98,6 +99,13 @@ input SignupInput {
 input LoginInput {
   email: String!
   secret: String!
+}
+
+input createMembershipInput {
+  userId: ID!
+
+  type: TypeMembership!
+  payment: PaymentMethod!
 }
 
 input ProfileInput {
