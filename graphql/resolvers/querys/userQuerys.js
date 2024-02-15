@@ -26,7 +26,7 @@ const userQuerys = {
 					extensions: { code: "BAD_REQUEST" },
 				});
 			}
-
+			
 			return user;
 		},
 	},
