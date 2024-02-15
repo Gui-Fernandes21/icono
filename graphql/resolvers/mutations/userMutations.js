@@ -66,8 +66,6 @@ const userMutations = {
 		async resolve(parent, { data }) {
 			if (!data.userId) throw new Error("Must specify the id of the user");
 
-			console.log(data);
-
 			const updateProfile = await profile.update({
 				where: { userID: +data.userId },
 				data: {
@@ -123,8 +121,6 @@ const userMutations = {
 					userId: +data.userId,
 				},
 			});
-
-			console.log(newMembership);
 
 			return newMembership;
 		},

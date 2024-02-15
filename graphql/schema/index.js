@@ -90,7 +90,8 @@ type AuthPayload {
 }
 
 input SignupInput {
-  name: String!
+  firstName: String!
+  lastName: String!
   email: String!
   secret: String!
 }
