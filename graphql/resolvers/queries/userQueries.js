@@ -3,19 +3,19 @@ const prisma = new PrismaClient();
 
 const { GraphQLError } = require("graphql");
 
-const userQuerys = {
-	async users() {
-		return await prisma.user.findMany();
+const userQueries = {
+	profiles: {
+		async resolve() {
+			return await prisma.profile.findMany();
+		},
 	},
 	profile: {
 		async resolve(parent, { userId }, context) {
 			return await prisma.profile.findUnique({ where: { userID: +userId } });
 		},
 	},
-	profiles: {
-		async resolve() {
-			return await prisma.profile.findMany();
-		},
+	async users() {
+		return await prisma.user.findMany();
 	},
 	user: {
 		async resolve(parent, { id }, context) {
@@ -26,7 +26,23 @@ const userQuerys = {
 					extensions: { code: "BAD_REQUEST" },
 				});
 			}
-			
+
+			return user;
+		},
+	},
+	dashboard: {
+		async resolve(parent, { userId }) {
+			const user = await prisma.user.findUnique({
+				where: { id: +userId },
+				include: { profile: true, membership: true },
+			});
+
+			if (user == null) {
+				throw new GraphQLError("user not found!", {
+					extensions: { code: "BAD_REQUEST" },
+				});
+			}
+
 			return user;
 		},
 	},
@@ -37,4 +53,4 @@ const userQuerys = {
 	},
 };
 
-module.exports = { userQuerys };
+module.exports = { userQueries };

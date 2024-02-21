@@ -125,6 +125,18 @@ const userMutations = {
 			return newMembership;
 		},
 	},
+
+	cancelMembership: {
+		async resolve(parent, {id}) {
+			const removedMembership = await membership.delete({ where: { id: +id }});
+
+			console.log(removedMembership);
+
+			if (!removedMembership) throw new Error("Error when trying to delete membership!");
+
+			return true;
+		}
+	}
 };
 
 module.exports = { userMutations };

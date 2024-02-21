@@ -1,17 +1,16 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-
 const { academyMutations } = require("./mutations/academyMutations");
 const { userMutations } = require("./mutations/userMutations");
 const { authMutations } = require("./mutations/authMutations");
 
-const { userQuerys } = require("./querys/userQuerys");
+const { userQueries } = require("./queries/userQueries");
+const { academyQueries } = require('./queries/academyQueries')
 
 
 
 const resolvers = {
 	Query: {
-    ...userQuerys,
+    ...userQueries,
+		...academyQueries
 	},
 	Mutation: {
 		...userMutations,

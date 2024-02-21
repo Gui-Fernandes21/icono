@@ -11,6 +11,9 @@ type Query {
   user(id: ID!): User
   profile(userId: ID!): Profile
   membership(userId: ID!): Membership
+  dashboard(userId: ID!): User
+
+  academies: [Academy]
 }
 
 type Mutation {
@@ -47,7 +50,6 @@ type Profile {
   lastName: String
   biography: String
   picUrl: String
-  
   rank: Belt
 
   userId: ID
@@ -74,7 +76,7 @@ type Academy {
 
   students: [Student]
   staff: [Staff]
-  ownerId: ID!
+  owner_id: ID!
 }
 
 type Classroom {
